@@ -20,6 +20,7 @@ import random
 #prova prova sa sa 1 2 3 si si sono lillo si si si
 #ragassiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiHFFHDKJF
 #CIAONAPOLI
+#Dio Cane
 #update salvatore
 
 def isfloat(value):
