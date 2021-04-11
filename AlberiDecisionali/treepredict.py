@@ -15,13 +15,10 @@
 #        ['slashdot','UK','no',21,'None'],
 #        ['google','UK','yes',18,'Basic'],
 #        ['kiwitobes','France','yes',19,'Basic']]
+import matplotlib.pyplot as plt
+from PIL import Image, ImageDraw
 import random
 
-#prova prova sa sa 1 2 3 si si sono lillo si si si
-#ragassiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiHFFHDKJF
-#CIAONAPOLI
-#Dio Cane
-#update salvatore
 
 def isfloat(value):
     try:
@@ -215,7 +212,7 @@ def giniimpurity(
 def entropy(rows):
     from math import log
 
-    log2 = lambda x: log(x) / log(2)
+    def log2(x): return log(x) / log(2)
     results = uniquecounts(rows)
     # Now calculate the entropy
     ent = 0.0
@@ -252,9 +249,6 @@ def getdepth(tree):
     return max(getdepth(tree.tb), getdepth(tree.fb)) + 1
 
 
-from PIL import Image, ImageDraw
-
-
 def drawtree(tree, jpeg="tree.jpg"):
     w = getwidth(tree) * 100
     h = getdepth(tree) * 100 + 120
@@ -277,7 +271,8 @@ def drawnode(draw, tree, x, y):
         right = x + (w1 + w2) / 2
 
         # Draw the condition string
-        draw.text((x - 20, y - 10), str(tree.col) + ":" + str(tree.value), (0, 0, 0))
+        draw.text((x - 20, y - 10), str(tree.col) +
+                  ":" + str(tree.value), (0, 0, 0))
 
         # Draw links to the branches
         draw.line((x, y, left + w1 / 2, y + 100), fill=(255, 0, 0))
@@ -289,9 +284,6 @@ def drawnode(draw, tree, x, y):
     else:
         txt = " \n".join(["%s:%d" % v for v in tree.results.items()])
         draw.text((x - 50, y), txt, (0, 0, 0))
-
-
-import matplotlib.pyplot as plt
 
 
 def performance(tree, test):
@@ -385,7 +377,8 @@ def mdclassify(observation, tree):
     else:
         v = observation[tree.col]
         if v == None:  # classificazione pesata
-            tr, fr = mdclassify(observation, tree.tb), mdclassify(observation, tree.fb)
+            tr, fr = mdclassify(observation, tree.tb), mdclassify(
+                observation, tree.fb)
             tcount = sum(tr.values())
             fcount = sum(fr.values())
             tw = float(tcount) / (tcount + fcount)
@@ -422,7 +415,8 @@ def variance(rows):
 def buildtree(rows, scoref=entropy):
     if len(rows) == 0:
         return decisionnode()
-    current_score = scoref(rows)  # scoref in realtà è la funzione dell' entropia
+    # scoref in realtà è la funzione dell' entropia
+    current_score = scoref(rows)
 
     # Set up some variables to track the best criteria
     best_gain = 0.0
@@ -487,6 +481,7 @@ def createDT(numdati, fil="nomefile.txt"):
 def performanceMeasure(fil="nomefile.txt"):
     data = aprifile(fil)
     fperformance(data)
+
 
 r = createDT(30, "mushroom.txt")
 
