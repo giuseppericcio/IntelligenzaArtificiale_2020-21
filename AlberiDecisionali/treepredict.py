@@ -18,6 +18,7 @@
 import random
 
 #prova prova sa sa 1 2 3 si si sono lillo si si si
+#ragassiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
 
 def isfloat(value):
     try:
