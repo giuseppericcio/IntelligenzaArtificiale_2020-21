@@ -17,6 +17,7 @@
 #        ['kiwitobes','France','yes',19,'Basic']]
 import random
 
+#prova prova sa sa 1 2 3 si si sono lillo si si si
 
 def isfloat(value):
     try:
