@@ -16,13 +16,10 @@
 #        ['google','UK','yes',18,'Basic'],
 #        ['kiwitobes','France','yes',19,'Basic']]
 import random
-<<<<<<< HEAD
 
 #prova prova sa sa 1 2 3 si si sono lillo si si si
-#ragassiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-=======
+#ragassiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiHFFHDKJF
 #CIAONAPOLI
->>>>>>> 2a9bb250c44d0058bee60cb0bf88140ec7969750
 
 def isfloat(value):
     try:
