@@ -16,7 +16,7 @@
 #        ['google','UK','yes',18,'Basic'],
 #        ['kiwitobes','France','yes',19,'Basic']]
 import random
-
+#CIAONAPOLI
 
 def isfloat(value):
     try:
