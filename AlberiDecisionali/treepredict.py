@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import matplotlib.pyplot as plt
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 import random
 
 
@@ -23,7 +23,7 @@ def isint(value):
         return False
 
 
-# Questa funzione apre un file e lo legge riga per riga
+# Questa funzione apre un file di testo.txt e lo legge riga per riga
 def aprifile(fil="nomefile.txt"):
     data = []
     for line in file(fil):
@@ -52,18 +52,19 @@ def cambiacolonna(data):
 
 
 # Questa funzione divide l'insieme di dati in una parte per il train dell'albero ed un'altra per il test
+# e salva l'insieme dei dati in un file con nome v%train.txt dove v è il numero di percentuale di dati da "trainare" 
 def createdataset(data, numdati, train):
     # print nelement
     tr = []
     te = []
     t = []
     for i in range(0, numdati):
-        t = random.choice(data)
+        t = random.choice(data)                 #random.choice(data) sceglie casualmente un dato nel dataset diviso per il training
         tr = tr + [t]
         num = data.index(t)
-        del data[num]
-    v = (numdati*100)/(len(data)+numdati)
-    f = open(str(v) + "%train.txt", "w")
+        del data[num] 
+    v = (numdati*100)/(len(data)+numdati)       #calcolo della percentuale di dati da trainingheggiare 
+    f = open(str(v) + "%train.txt", "w")        #salvataggio del file v%train.txt
     if len(train) is not 0:
         for row in train:
             f.write("%s\n" % row)
@@ -74,9 +75,12 @@ def createdataset(data, numdati, train):
     # if dato not in tr:
     #  if dato
     # print dato
+    # (COMMMMMMMMMMMMMMMMMM??)
+
+    #il numero restante sarà dedicato al test
     te = data
-    v = 100 - v
-    f1 = open(str(v) + "%test.txt", "w")
+    v = 100 - v                                 #calcolo della percentuale di dati da testare
+    f1 = open(str(v) + "%test.txt", "w")        #salvataggio del file v%test.txt
     for row in te:
         f1.write("%s\n" % row)
     f1.close()
@@ -84,6 +88,7 @@ def createdataset(data, numdati, train):
 
 
 # Questa funzione serve a formattare il file.txt preso da un dataset per costruire l'albero decisionale
+# il formato sarà [ x , y , z ]
 def mettivirgola(fil="nomefile.txt"):
     l = ""
     f1 = open(fil + "aggiunta.txt", "a")
@@ -96,7 +101,9 @@ def mettivirgola(fil="nomefile.txt"):
             f1.write(line)
 
 
-# INIZIO del codice del Capitolo 7
+# ------------------------------- INIZIO del codice del Capitolo 7 --------------------------------
+
+# Creazione della classe nodo decisionale
 class decisionnode:
     def __init__(self, col=-1, value=None, results=None, tb=None, fb=None):
         self.col = col          # colonna del criterio da testare
@@ -213,9 +220,11 @@ def drawtree(tree, jpeg="tree.jpg"):
     w = getwidth(tree) * 100
     h = getdepth(tree) * 100 + 120
 
+    # Sfondo dell'immagine
     img = Image.new("RGB", (w, h), (255, 255, 255))
     draw = ImageDraw.Draw(img)
 
+    # Disegno il nodo nell'immagine (w / 2 = x ed 20 = y la posizione del nodo)
     drawnode(draw, tree, w / 2, 20)
     img.save(jpeg, format="JPEG", quality=40, progessive=True)
 
@@ -232,12 +241,13 @@ def drawnode(draw, tree, x, y):
         right = x + (w1 + w2) / 2
 
         # Disegna la stringa della condizione
+        # E' POSSIBILE AGGIUNGERE UN font = ImageFont.truetype("arial.ttf", 15) e passare font = font in draw.text (PIU' LEGGIBILE)
         draw.text((x - 20, y - 10), str(tree.col) +
-                  ":" + str(tree.value), (0, 0, 0))
+                  ":" + str(tree.value), fill=(0, 0, 0))
 
         # Disegna i collegamenti ai rami
-        draw.line((x, y, left + w1 / 2, y + 100), fill=(255, 0, 0))
-        draw.line((x, y, right - w2 / 2, y + 100), fill=(255, 0, 0))
+        draw.line((x, y, left + w1 / 2, y + 100), fill=(255, 0, 0), width=2)    #aggiunto width = 2 (PIU' LEGGIBILE)
+        draw.line((x, y, right - w2 / 2, y + 100), fill=(255, 0, 0), width=2)
 
         # Disegna i nodi del ramo
         drawnode(draw, tree.fb, left + w1 / 2, y + 100)
@@ -277,7 +287,7 @@ def prune(tree, mingain):
         prune(tree.fb, mingain)
 
     # Se entrambi i rami secondari sono ora foglie, vedere se
-    # dovrebbero essere uniti
+    # dovrebbero essere uniti (EVVIVA LA TRADUZIONE INGLESE ITALIANO)
     if tree.tb.results != None and tree.fb.results != None:
         # Costruire un dataset combinato
         tb, fb = [], []
@@ -418,14 +428,14 @@ def fperformance(data):
     perc = []
     t = []
     numdati = (int)((float)(len(testc)) / 100 * percent)
-    for i in range(0, 5):
+    for i in range(0, 5):                                               
         (train, testc) = createdataset(testc, numdati, t)
         t = t + train
         tree = buildtree(t)
         p = p + [performance(tree, testc)]
         perc = perc + [percent]
         percent = percent + 10
-    (line,) = plt.plot(perc, p, "r-")
+    (line,) = plt.plot(perc, p, "r-", linestyle="solid", marker="o")    #Aggiunti i punti(marker) e linestyle(solid, dashed, dotted)
     plt.xlabel("percentuale dati training")
     plt.ylabel("percentuale successi")
     line.set_antialiased(False)
@@ -437,7 +447,7 @@ def createDT(numdati, fil="nomefile.txt"):
     data = aprifile(fil)
     (training, test) = createdataset(data, numdati, [])
     tree = buildtree(training)
-    drawtree(tree,"K" + str(random.randint(0, 100)) + "-" + fil+ "-" + str(numdati) + "-tree.jpg")
+    drawtree(tree,"K" + str(random.randint(0, 100)) + "-" + fil+ "-" + str(numdati) + "-tree.jpg")  #nome del file.jpg
 
 
 # Questa funzione stampa il grafico della perfomance dell'albero decisionale
