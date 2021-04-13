@@ -1,2 +1,3 @@
 # IA_Progetto
-Eccoci
+
+Progetto d'esame Intelligenza Artificiale A.A. 2020-21
