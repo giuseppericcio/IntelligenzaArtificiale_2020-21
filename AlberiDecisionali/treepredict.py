@@ -411,24 +411,25 @@ def performance(tree,test):
         #f=f+['false']
   percent=float(t)/len(test)
   print len(test)
-  #print len(test)
   return percent
 
 # Questa funzione costruisce il grafico di performance dell'albero decisionale
 def fperformance(data):
-  testc=data
+  import copy
+  dataset=copy.copy(data)                                       #definisce una SHALLOW copy del dataset originale
   percent=10
   p=[]
   perc=[]
   t=[]
-  numdati=(int)((float)(len(testc))/100*percent);
-  for i in range(0,5):
-    (train,testc)=createdataset(testc,numdati,t)
+  for i in range(0,10):
+    numdati=(int)((float)(len(data)*(100-percent))/100);
+    (train,test)=createdataset(dataset,numdati,t)
     t=t+train;
     tree=buildtree(t)
-    p=p+[performance(tree,testc)]
+    p=p+[performance(tree,test)]
     perc=perc+[percent]
     percent=percent+10;
+    dataset=copy.copy(data)
   line,=plt.plot(perc,p,'r-',linestyle="solid",marker="o")      # Aggiunti i punti(marker) e linestyle(solid, dashed, dotted)
   plt.xlabel('percentuale dati training')
   plt.ylabel('percentuale successi')
