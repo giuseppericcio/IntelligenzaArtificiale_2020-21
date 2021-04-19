@@ -272,14 +272,14 @@ def performance(tree, test):
     return percent
 
 # Questa funzione costruisce il grafico di performance dell'albero decisionale
-def fperformance(data):
+def learningcurve(data):
     testc = data
     percent = 10
     p = []
     perc = []
     t = []
     numdati = (int)((float)(len(testc)) / 100 * percent);
-    for i in range(0, 5):
+    for i in range(0, 9):
         (train, testc) = splitdataset2(testc, numdati, t)
         t = t + train;
         tree = buildtree(t)
@@ -287,8 +287,8 @@ def fperformance(data):
         perc = perc + [percent]
         percent = percent + 10;
     line, = plt.plot(perc, p, 'r-')
-    plt.xlabel('percentuale dati training')
-    plt.ylabel('percentuale successi')
+    plt.xlabel('Training set size')
+    plt.ylabel('%' + 'Correct on test set')
     line.set_antialiased(False)
     plt.show()
 
@@ -430,4 +430,4 @@ def createDT(numdati, fil='nomefile.txt'):
 # Questa funzione stampa il grafico della perfomance dell'albero decisionale
 def performanceMeasure(fil='nomefile.txt'):
     data = aprifile(fil)
-    fperformance(data)
+    learningcurve(data)
