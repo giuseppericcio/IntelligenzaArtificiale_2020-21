@@ -8,9 +8,9 @@ if __name__ == '__main__':
     test_data=[]
 
     print("ALL DATASET:\n")
-    mydata= tp.aprifile("echocardiogram.txt")
+    mydata=tp.aprifile("echocardiogram.txt")
 
-    train_data, test_data = tp.splitdataset2(mydata, 26, [])
+    train_data, test_data = tp.splitdataset2(mydata, 105, [])
 
     print("TRAIN DATA : \n")
 
@@ -20,9 +20,9 @@ if __name__ == '__main__':
 
     print(str(len(test_data)) + "\n")
 
-    mushrooms_tree = tp.buildtree(train_data)
+    echocardiogram_tree = tp.buildtree(train_data)
 
-    tp.drawtree(mushrooms_tree, "echocardiogram_tree.jpeg")
+    tp.drawtree(echocardiogram_tree, "echocardiogram_tree.jpeg")
 
     print("MISURA PERFORMANCE: \n")
     

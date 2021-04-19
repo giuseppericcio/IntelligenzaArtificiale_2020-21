@@ -8,9 +8,9 @@ if __name__ == '__main__':
     test_data=[]
 
     print("ALL DATASET:\n")
-    mydata= tp.aprifile("mushrooms_final.txt")
+    mydata=tp.aprifile("mushrooms_final.txt")
 
-    train_data, test_data = tp.splitdataset2(mydata, 3250, [])
+    train_data, test_data = tp.splitdataset2(mydata, 4875, [])
 
     print("TRAIN DATA : \n")
 
@@ -26,6 +26,6 @@ if __name__ == '__main__':
 
     print("MISURA PERFORMANCE: \n")
 
-    tp.fperformance(mydata)
+    tp.learningcurve(mydata)
 
     print("\n")
