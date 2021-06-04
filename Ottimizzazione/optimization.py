@@ -336,7 +336,7 @@ if __name__ == '__main__':
     #Popolazione iniziale dei valori da assegnare alla funzione
     popolazione = [-60, 0, 5, 10, 15, 80, 100, 110]
 
-    print('Popolazione iniziale: ' + str(popolazione))
+    print('\n\nPopolazione iniziale: ' + str(popolazione))
 
     #Valori di ottimizzazione della funzione
     f = cost_max(popolazione)
@@ -346,7 +346,7 @@ if __name__ == '__main__':
     #Calcoliamo il costo dell'algoritmo data la popolazione
     costo_max = cost_fun(popolazione)
 
-    print('Costo dello algoritmo: ' + str(costo_max))
+    print('Costo dello algoritmo: ' + str(costo_max) + '\n\n')
 
     #Funzione del Capitolo 5che implementa l'algoritmo genetico
     geneticoptimize(popolazione, f)
